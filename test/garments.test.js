@@ -21,7 +21,7 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should create a garment table in the database', async () => {
 
 		// use db.one
-		const result = await db.one('select count(*) from garment')
+		const result = await db.one('select count(*) from garment');
 			// no changes below this line in this function
 
 		assert.ok(result.count);
