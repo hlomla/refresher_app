@@ -1,6 +1,7 @@
 const PgPromise = require("pg-promise")
 const assert = require("assert");
 const fs = require("fs");
+const { log } = require("console");
 
 require('dotenv').config()
 
@@ -20,15 +21,16 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should create a garment table in the database', async () => {
 
 		// use db.one
+		const result = await db.one('select count(*) from garment')
+			// no changes below this line in this function
 
-		// no changes below this line in this function
 		assert.ok(result.count);
 	});
 
-	it('there should be 11 garments in the garment table - added using the supplied script', async () => {
+	it('there should be 30 garments in the garment table - added using the supplied script', async () => {
 
 		// use db.one as 1 result us expected
-
+		const result = await db.one('select count(*) from garment')
 		// no changes below this line in this function
 
 		assert.equal(30, result.count);
@@ -36,13 +38,15 @@ describe('As part of the sql refresh workshop', () => {
 
 	it('you should be able to find all the Summer garments', async () => {
 		// add some code below
-
+		const result = await db.one(`select count(*) from garment where season  = 'Summer'`)
 		// no changes below this line in this function
+		
 		assert.equal(12, result.count);
 	});
 
 	it('you should be able to find all the Winter garments', async () => {
 		// add some code below
+		const result = await db.one(`select count(*) from garment where season  = 'Winter'`)
 
 		// no changes below this line in this function
 		assert.equal(5, result.count);
@@ -50,6 +54,7 @@ describe('As part of the sql refresh workshop', () => {
 
 	it('you should be able to find all the Winter Male garments', async () => {
 		// change the code statement below
+		const result = await db.one(`select count(*) from garment where season = 'Winter' and gender = 'Male';`)
 
 		// no changes below this line in this function
 		assert.equal(3, result.count);
@@ -58,7 +63,7 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should be able to change a given Male garment to a Unisex garment', async () => {
 
 		// use db.one with an update sql statement
-
+		await db.none(`UPDATE garment set gender = $1 where description = $2`, ['Unisex', 'Red hooded jacket']);
 		// write your code above this line
 		
 		const gender_sql = 'select gender from garment where description = $1'
@@ -70,7 +75,7 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should be able to add 2 Male & 3 Female garments', async () => {
 
 		// use db.none - change code below here...
-
+		await db.none(`insert into garment(description, img, season, gender, price) values ('Lime Vest', 'mens-128x128-455128.png', 'Summer', 'Male', '69.99'`);
 
 		// write your code above this line
 
@@ -109,6 +114,8 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should be able to remove all the Unisex garments', async () => {
 
 		// and below this line for this function will
+		await db.none(`DELETE FROM garment WHERE (gender=$1)`, ['Unisex'])
+
 
 		// write your code above this line
 
