@@ -75,8 +75,12 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should be able to add 2 Male & 3 Female garments', async () => {
 
 		// use db.none - change code below here...
-		await db.none(`insert into garment(description, img, season, gender, price) values ('Lime Vest', 'mens-128x128-455128.png', 'Summer', 'Male', '69.99'`);
-
+		await db.none(`insert into garment(description, img, season, gender, price) values ('Lime Vest', 'mens-128x128-455128.png', 'Summer', 'Male', '69.99')`);
+		await db.none(`insert into garment(description, img, season, gender, price) values ('Brown Jacket - Casual', 'mens-128x128-455129.png', 'All Seasons', 'Male', '399.99')`)
+		
+		await db.none(`insert into garment(description, img, season, gender, price) values ('Orange dress(formal)', 'frock-128x128-455120.png', 'Summer', 'Female', '249.99')`)
+		await db.none(`insert into garment(description, img, season, gender, price) values ('Short Skirt(Lime)', 'skirt-128x128-455130.png', 'Summer', 'Female', '199.99')`)
+		await db.none(`insert into garment(description, img, season, gender, price) values ('Blazer', 'womans-128x128-455136.png', 'All Seasons', 'Female', '399.99')`)
 		// write your code above this line
 
 		const gender_count_sql = 'select count(*) from garment where gender = $1'
@@ -91,7 +95,10 @@ describe('As part of the sql refresh workshop', () => {
 	it('you should be group garments by gender and count them', async () => {
 
 		// and below this line for this function will
-
+		const garmentsGrouped = await db.many(`select count(*) , gender 
+		from garment 
+		group by gender;
+		`)
 		// write your code above this line
 
 		const expectedResult = [
