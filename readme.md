@@ -1,1 +1,1 @@
-[![Build Status](https://app.travis-ci.com/OkuhleT/refresher_app.svg?branch=main)](https://app.travis-ci.com/OkuhleT/refresher_app)
+[![Build Status](https://app.travis-ci.com/hlomla/refresher_app.svg?branch=main)](https://app.travis-ci.com/hlomla/refresher_app)
